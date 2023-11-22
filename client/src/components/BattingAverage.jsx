@@ -1,25 +1,27 @@
-// need the total atBats vs hits
+// imported the context and destrcutured the 'games'
+// *** comes as an object so NEED TO DRILL DOWN
 import { useContext } from 'react'
 import { StatsContext } from '../context/StatsContext'
 
 const BattingAverage = () => {
-  const { transactions } = useContext(StatsContext)
+  // destructured the context value
+  const { games } = useContext(StatsContext)
 
-  const atBats = transactions.reduce((acc, curr) => {
-    return acc + curr.atBats
+  // reducing games to find hits and atBats - NOTICE THE CHAINING
+  const atBats = games.games.reduce((acc, curr) => {
+    return acc + curr.id.atBats
   }, 0)
-  const hits = transactions.reduce((acc, curr) => {
-    return acc + curr.hits
+  const hits = games.games.reduce((acc, curr) => {
+    return acc + curr.id.hits
   }, 0)
 
+  // create a current average var
   const currentAverage = (hits / atBats).toFixed(3).slice(2)
 
   return (
-    <div className="bg-white  rounded-lg p-10 w-[100%] shadow-md shadow-slate-400 my-2">
+    <div className="bg-white rounded-lg p-5 w-[100%] shadow-md shadow-gray-400 my-1">
       <h3>Current AVG:</h3>
-      <span className="font-bold text-4xl text-orange-400">
-        {currentAverage}
-      </span>
+      <h2 className="font-bold text-5xl text-orange-400">{currentAverage}</h2>
     </div>
   )
 }
